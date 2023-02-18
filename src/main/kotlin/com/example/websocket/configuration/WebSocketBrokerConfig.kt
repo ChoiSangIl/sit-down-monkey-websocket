@@ -9,13 +9,12 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 class WebSocketBrokerConfig: WebSocketMessageBrokerConfigurer {
+    override fun configureMessageBroker(registry: MessageBrokerRegistry) {
+        registry.enableSimpleBroker("/seat")
+    }
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
         registry.addEndpoint("/sit-down-monkey")
+            .setAllowedOrigins("http://localhost:8081")
             .withSockJS()
-    }
-
-    override fun configureMessageBroker(registry: MessageBrokerRegistry) {
-        registry.enableSimpleBroker("/queue","topic")
-        registry.setApplicationDestinationPrefixes("app")
     }
 }
